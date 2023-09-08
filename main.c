@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#define N 10 // число вершин графа
 
 // -- Прототипы функций --
 // Основные
 
 // Вспомогательные
-void input(int *start, int *end);
+int input(int *start, int *end);
 int get_int();
 
 
@@ -14,10 +14,17 @@ int get_int();
 
 
 int main() {
+    // Содержит метки: 0 - вершина ещё не рассмотрена, 1 - вершина уже рассмотрена
+    int FIKS[N] = {0};
+    // Текущие кратчайшие расстояния от исходной до соответствующей вершины
+    int MIN_WEG[N] = {0};
+    
     // Пользовательский ввод стартовой и конечной вершины 
     int start = 0, end = 0;
-    input(&start, &end);
-
+    if(input(&start, &end) == 1) {
+        printf("input error\n");
+        return 0;
+    }
 
     printf("start: %d\tend: %d\n", start, end);
 
@@ -28,12 +35,19 @@ int main() {
 
 
 
-// Функция получает от пользователя стартовую и конечную вершины
-void input(int *start, int *end) {
-    printf("input start node: ");
+// Функция получает от пользователя стартовую и конечную вершины, возвращает 1 в случае ошибки
+int input(int *start, int *end) {
+    printf("input the node from 0 to 9 (0...9)\n");
+    printf("start node: ");
     *start = get_int();
-    printf("input end node: ");
+    if(*start < 0 || *start > 9){
+        return 1;
+    }
+    printf("end node: ");
     *end = get_int();
+    if(*end < 0 || *end > 9) {
+        return 1;
+    }
 }
 
 // Функция получает от пользователя число типа int 
